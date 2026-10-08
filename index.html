@@ -1,0 +1,278 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Honors Master List</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* layout: sticky filter bar over a one/two-column card list; cards carry a cover-colour swatch, the facts row, chips, the blurb, then the marking row */
+:root{--bg:#f3f3f6;--card:#ffffff;--fg:#1a1c25;--muted:#555a6e;--line:#d6d9e4;--chip:#e9ebf3;--star:#c98a0a;--queer:#6f2bd9;--queer-bg:#eee7fc;--keep:#1c7c4a;--keep-bg:#e3f4ea;--cut:#b23a2e;--cut-bg:#fbe7e4;--rw:#1f5fb8;--rw-bg:#e4edfb;--btn:#1a1c25;--btn-fg:#ffffff;--focus:#2f6fed;
+ --display:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;--body:'Atkinson Hyperlegible',system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1b1e27;--fg:#eceef5;--muted:#aab0c4;--line:#2c3040;--chip:#262a37;--star:#f0b429;--queer:#b48cff;--queer-bg:#2b2340;--keep:#5fd39a;--keep-bg:#163626;--cut:#ff8c7f;--cut-bg:#3d1f1b;--rw:#8fb5ff;--rw-bg:#1b2a45;--btn:#eceef5;--btn-fg:#111318;--focus:#7aa2ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111318;--card:#1b1e27;--fg:#eceef5;--muted:#aab0c4;--line:#2c3040;--chip:#262a37;--star:#f0b429;--queer:#b48cff;--queer-bg:#2b2340;--keep:#5fd39a;--keep-bg:#163626;--cut:#ff8c7f;--cut-bg:#3d1f1b;--rw:#8fb5ff;--rw-bg:#1b2a45;--btn:#eceef5;--btn-fg:#111318;--focus:#7aa2ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.4;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-block:10px 60px;padding-inline:16px;overflow-x:clip}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8vw,54px);line-height:.95;margin:4px 0 2px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 10px;font-size:14px}
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 10px}
+.stat b{display:block;font-family:var(--display);font-size:28px;line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:6px 0 8px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid var(--line)}
+.row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;align-items:center}
+.row::-webkit-scrollbar{display:none}
+.lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:0 0 auto;min-width:52px}
+button.ch{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 11px;white-space:nowrap;cursor:pointer;flex:0 0 auto}
+button.ch[aria-pressed="true"]{background:var(--btn);color:var(--btn-fg);border-color:var(--btn)}
+button.ch.q[aria-pressed="true"]{background:var(--queer);border-color:var(--queer);color:#fff}
+button.ch.k[aria-pressed="true"]{background:var(--keep);border-color:var(--keep);color:#fff}
+button.ch.x[aria-pressed="true"]{background:var(--cut);border-color:var(--cut);color:#fff}
+button.ch.w[aria-pressed="true"]{background:var(--rw);border-color:var(--rw);color:#fff}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.search{font:inherit;font-size:15px;width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);color:var(--fg)}
+select.sel,input.num{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--card);color:var(--fg)}
+input.num{width:64px;font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+@media (min-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px 12px;min-width:0;border-left-width:5px}
+.card[data-m="keep"]{border-left-color:var(--keep)}.card[data-m="cut"]{border-left-color:var(--cut);opacity:.72}.card[data-m="rw"]{border-left-color:var(--rw)}
+.sw{width:56px;aspect-ratio:2/3;border-radius:6px;background:var(--chip);display:flex;align-items:flex-end;justify-content:center;font-family:var(--display);font-weight:700;font-size:13px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);padding-bottom:4px;overflow:hidden;position:relative}
+.sw img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sw b{position:relative}
+.head{min-width:0;display:flex;flex-direction:column;gap:3px}
+.t{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.02;margin:0;text-wrap:balance}
+.t small{font-family:var(--body);font-weight:400;font-size:12px;color:var(--muted);display:block;margin-top:2px}
+.facts{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.facts b{color:var(--fg);font-weight:700}
+.score{display:inline-flex;align-items:center;gap:5px;font-variant-numeric:tabular-nums}
+.score i{font-style:normal;color:var(--star)}
+.chips{display:flex;flex-wrap:wrap;gap:4px;grid-column:1/-1}
+.chip{font-size:11.5px;background:var(--chip);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.chip.q{background:var(--queer-bg);color:var(--queer);font-weight:700}
+.chip.q.lo{opacity:.7;font-weight:400}
+.blurb{grid-column:1/-1;font-size:13.5px;color:var(--fg);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line;cursor:pointer}
+.blurb.open{display:block;-webkit-line-clamp:unset}
+.links{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px}
+.links a{color:var(--rw);text-decoration:none;border-bottom:1px solid var(--line)}.links a b{font-weight:700}
+.marks{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:8px}
+.mrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mrow .who{font-size:11.5px;color:var(--muted);margin-left:auto}
+textarea.note{font:inherit;font-size:13px;width:100%;min-height:38px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--bg);color:var(--fg);resize:vertical}
+textarea.sum{min-height:60px}
+.more{display:block;margin:16px auto 0;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:10px;padding:10px 18px;cursor:pointer}
+.note-ro{font-size:13px;background:var(--bg);border-radius:8px;padding:6px 8px;white-space:pre-wrap}
+.banner{font-size:13px;color:var(--muted);margin:6px 0 0}
+.empty{grid-column:1/-1;color:var(--muted);padding:30px 0;text-align:center}
+.gh{display:flex;flex-direction:column;gap:6px;margin:6px 0 2px}.gh>button{align-self:flex-start}.gh .who{font-size:12.5px;color:var(--muted)}#ghForm{display:flex;flex-direction:column;gap:6px}
+@media (prefers-reduced-motion:no-preference){.card{transition:opacity .15s}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header>
+<h1>Honors Master List</h1>
+<p class="sub">Every anime and manga with 10,000+ AniList users, adult titles excluded; queer-tagged titles down to 1,000. Mark each one keep, cut or rewrite.</p>
+<div class="stats"><div class="stat"><b id="sTotal">–</b><span>titles</span></div><div class="stat"><b id="sShown">–</b><span>shown</span></div><div class="stat"><b id="sKeep">0</b><span>keep</span></div><div class="stat"><b id="sRw">0</b><span>rewrite</span></div><div class="stat"><b id="sCut">0</b><span>cut</span></div></div>
+<p class="banner" id="banner" hidden></p>
+<div class="gh" id="gh" hidden><button class="ch" id="ghBtn" type="button">Connect GitHub to mark</button><span class="who" id="ghWho"></span>
+<form id="ghForm" hidden><input class="search" id="ghTok" type="password" placeholder="Paste your GitHub token (fine-grained, this repo, Contents: write)" autocomplete="off"><div class="mrow"><button class="ch" type="submit">Save token</button><button class="ch" type="button" id="ghCancel">Cancel</button><button class="ch" type="button" id="ghForget" hidden>Forget token</button></div></form></div>
+</header>
+<div class="bar">
+<input class="search" id="q" type="search" placeholder="Search title, studio, author, tag…" autocomplete="off">
+<div class="row"><span class="lbl">Type</span><button class="ch" data-k="type" data-v="" aria-pressed="true">Both</button><button class="ch" data-k="type" data-v="A">Anime</button><button class="ch" data-k="type" data-v="M">Manga</button>
+<span class="lbl">Queer</span><button class="ch q" data-k="queer" data-v="" aria-pressed="true">All</button><button class="ch q" data-k="queer" data-v="any">Tagged</button><button class="ch q" data-k="queer" data-v="none">Untagged</button><button class="ch q" data-k="queer" data-v="LGBTQ+ Themes">LGBTQ+</button><button class="ch q" data-k="queer" data-v="Boys' Love">BL</button><button class="ch q" data-k="queer" data-v="Yuri">Yuri</button><button class="ch q" data-k="queer" data-v="Transgender">Trans</button><button class="ch q" data-k="queer" data-v="Gender Bending">Gender bending</button><button class="ch q" data-k="queer" data-v="Crossdressing">Crossdressing</button><button class="ch q" data-k="queer" data-v="Bisexual">Bi</button><button class="ch q" data-k="queer" data-v="Asexual">Ace</button></div>
+<div class="row"><span class="lbl">Genre</span><div id="genres" class="row" style="padding:0"></div></div>
+<div class="row"><span class="lbl">Years</span><select class="sel" id="yr"><option value="">any</option><option value="2025-2028">2025–now</option><option value="2020-2024">2020–24</option><option value="2015-2019">2015–19</option><option value="2010-2014">2010–14</option><option value="2000-2009">2000s</option><option value="1990-1999">1990s</option><option value="1980-1989">1980s</option><option value="1949-1979">before 1980</option></select>
+<span class="lbl">Score ≥</span><select class="sel" id="minsc"><option value="0">any</option><option value="60">60</option><option value="70">70</option><option value="75">75</option><option value="80">80</option><option value="85">85</option></select>
+<span class="lbl">Format</span><select class="sel" id="fmt"><option value="">any</option><option value="TV">TV</option><option value="TV_SHORT">TV short</option><option value="MOVIE">Movie</option><option value="OVA">OVA</option><option value="ONA">ONA</option><option value="SPECIAL">Special</option><option value="MANGA">Manga</option><option value="ONE_SHOT">One-shot</option><option value="NOVEL">Light novel</option></select>
+<span class="lbl">Where</span><select class="sel" id="where"><option value="">any</option><option value="Crunchyroll">Crunchyroll</option><option value="Netflix">Netflix</option><option value="Hulu">Hulu</option><option value="HIDIVE">HIDIVE</option><option value="Disney Plus">Disney+</option><option value="Amazon Prime Video">Prime</option><option value="Max">Max</option><option value="YouTube">YouTube</option><option value="VIZ">VIZ (manga)</option><option value="MANGA Plus">MANGA Plus</option><option value="Bilibili TV">Bilibili</option></select></div>
+<div class="row"><span class="lbl">Marks</span><button class="ch" data-k="mark" data-v="" aria-pressed="true">All</button><button class="ch k" data-k="mark" data-v="keep">Keep</button><button class="ch w" data-k="mark" data-v="rw">Rewrite</button><button class="ch x" data-k="mark" data-v="cut">Cut</button><button class="ch" data-k="mark" data-v="none">Unmarked</button>
+<span class="lbl">Sort</span><select class="sel" id="sort"><option value="sc">Top rated</option><option value="pop">Most users</option><option value="yd">Newest</option><option value="ya">Oldest</option><option value="n">A–Z</option><option value="qr">Queer tag strength</option></select></div>
+</div>
+<div class="grid" id="grid"><div class="empty">Loading the list…</div></div>
+<button class="more" id="more" hidden>Show 60 more</button>
+</div>
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const state={type:'',queer:'',genre:'',mark:'',q:'',yr:'',minsc:0,fmt:'',where:'',sort:'sc'};
+try{const s=JSON.parse(localStorage.getItem('hml.filters.v2')||'{}');Object.assign(state,s);}catch(e){}
+let rows=[],shown=[],page=0,PAGE=60,marks={},db=null,me=null,userNs=null,canWrite=true,inViewer=!!(window.claude&&window.claude.use);
+const QO={'LGBTQ+ Themes':1,"Boys' Love":2,'Yuri':3,'Transgender':4,'Gender Bending':5,'Crossdressing':6,'Bisexual':7,'Asexual':8};
+const FMT={TV:'TV',TV_SHORT:'TV short',MOVIE:'Movie',OVA:'OVA',ONA:'ONA',SPECIAL:'Special',MANGA:'Manga',ONE_SHOT:'One-shot',NOVEL:'Light novel',MUSIC:'Music'};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtN=n=>n==null?'':n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?Math.round(n/1e3)+'k':String(n);
+function save(){try{localStorage.setItem('hml.filters.v2',JSON.stringify(state));}catch(e){}}
+function syncUI(){
+ document.querySelectorAll('button.ch[data-k]').forEach(b=>b.setAttribute('aria-pressed',String((state[b.dataset.k]||'')===b.dataset.v)));
+ $('#q').value=state.q;$('#yr').value=state.yr||'';$('#minsc').value=String(state.minsc||0);$('#fmt').value=state.fmt;$('#where').value=state.where;$('#sort').value=state.sort;
+}
+function apply(){
+ const q=state.q.trim().toLowerCase();const yr=(state.yr||'').split('-');const y1=+yr[0]||0,y2=+yr[1]||9999,ms=+state.minsc||0;
+ shown=rows.filter(r=>{
+  if(state.type&&r.t!==state.type)return false;
+  if(state.queer==='any'&&!r.q.length)return false;
+  if(state.queer==='none'&&r.q.length)return false;
+  if(state.queer&&state.queer!=='any'&&state.queer!=='none'&&!r.q.some(t=>t[0]===state.queer))return false;
+  if(state.genre&&!r.g.includes(state.genre))return false;
+  if(r.y&&(r.y<y1||r.y>y2))return false; if(!r.y&&state.yr)return false;
+  if(ms&&(r.sc||0)<ms)return false;
+  if(state.fmt&&r.f!==state.fmt)return false;
+  if(state.where&&!r.s.some(x=>x[0]===state.where))return false;
+  const m=marks[r.id];
+  if(state.mark==='none'&&m&&m.s)return false;
+  if(state.mark&&state.mark!=='none'&&!(m&&m.s===state.mark))return false;
+  if(q&&!(r._k.includes(q)))return false;
+  return true;
+ });
+ const s=state.sort;
+ shown.sort((a,b)=>s==='sc'?(b.sc||0)-(a.sc||0)||(b.pop||0)-(a.pop||0):s==='yd'?(b.y||0)-(a.y||0)||(b.pop||0)-(a.pop||0):s==='ya'?(a.y||9999)-(b.y||9999):s==='n'?a.n.localeCompare(b.n):s==='qr'?(b._qr)-(a._qr)||(b.pop||0)-(a.pop||0):(b.pop||0)-(a.pop||0));
+ page=0;render(true);
+ $('#sShown').textContent=shown.length.toLocaleString();
+}
+function card(r){
+ const m=marks[r.id]||{};
+ const t=r.n===r.r||!r.r?'':r.r;
+ const facts=[r.y?`<b>${r.y}</b>${r.y2&&r.y2!==r.y?'–'+r.y2:''}`:'',FMT[r.f]||r.f,r.t==='A'?(r.ep?`${r.ep} ep${r.ep>1?'s':''}${r.dur?' · '+r.dur+' min':''}`:''):(r.ch?`${r.ch} ch${r.vol?' · '+r.vol+' vol':''}`:''),r.t==='A'?r.stu.join(', '):r.by.join(', '),r.co&&r.co!=='JP'?r.co:''].filter(Boolean).join(' · ');
+ const qchips=r.q.slice().sort((a,b)=>b[1]-a[1]).map(t=>`<span class="chip q${t[1]<60?' lo':''}">${esc(t[0])} ${t[1]}</span>`).join('');
+ const gchips=r.g.map(g=>`<span class="chip">${esc(g)}</span>`).join('')+r.tg.slice(0,4).map(g=>`<span class="chip" style="opacity:.75">${esc(g)}</span>`).join('');
+ const img=(!inViewer&&r.img)?`<img src="${esc(r.img)}" alt="" loading="lazy">`:'';
+ const links=r.s.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener"><b>${esc(x[0])}</b></a>`).join('')+`<a href="${esc(r.u)}" target="_blank" rel="noopener" style="color:var(--muted)">AniList</a>`;
+ let markrow='';
+ if(db&&canWrite){
+  markrow=`<div class="marks"><div class="mrow"><button class="ch k" data-m="keep" aria-pressed="${m.s==='keep'}">Keep</button><button class="ch w" data-m="rw" aria-pressed="${m.s==='rw'}">Rewrite</button><button class="ch x" data-m="cut" aria-pressed="${m.s==='cut'}">Cut</button><span class="who" data-who="${esc(m.by||'')}">${m.by?'…':''}</span></div><textarea class="note" data-f="note" placeholder="Why it's in or out">${esc(m.note||'')}</textarea>${m.s==='rw'||m.sum?`<textarea class="note sum" data-f="sum" placeholder="Our summary, in our words">${esc(m.sum||'')}</textarea>`:''}</div>`;
+ }else if(m.s||m.note||m.sum){
+  markrow=`<div class="marks"><div class="mrow"><span class="chip ${m.s==='keep'?'k':m.s==='cut'?'x':'w'}" style="background:var(--${m.s==='rw'?'rw':m.s}-bg);color:var(--${m.s==='rw'?'rw':m.s})">${m.s==='keep'?'Keep':m.s==='cut'?'Cut':'Rewrite'}</span><span class="who" data-who="${esc(m.by||'')}"></span></div>${m.note?`<div class="note-ro">${esc(m.note)}</div>`:''}${m.sum?`<div class="note-ro">${esc(m.sum)}</div>`:''}</div>`;
+ }
+ return `<article class="card" data-id="${r.id}" data-m="${esc(m.s||'')}"><div class="sw" style="background:${esc(r.c||'#777')}">${img}<b>${r.t==='A'?'ANIME':'MANGA'}</b></div><div class="head"><h2 class="t">${esc(r.n)}${t?`<small>${esc(t)}</small>`:''}</h2><div class="facts">${facts}</div><div class="facts"><span class="score"><i>★</i><b>${r.sc!=null?(r.sc/10).toFixed(1):'–'}</b></span> · ${fmtN(r.pop)} users${r.fav?' · '+fmtN(r.fav)+' ♥':''}</div></div><div class="chips">${qchips}${gchips}</div>${r.d?`<div class="blurb">${esc(r.d)}</div>`:''}<div class="links">${links}</div>${markrow}</article>`;
+}
+function render(reset){
+ const g=$('#grid');
+ if(reset){g.innerHTML='';}
+ const slice=shown.slice(page*PAGE,(page+1)*PAGE);
+ if(!shown.length){g.innerHTML='<div class="empty">Nothing matches. Loosen a filter.</div>';$('#more').hidden=true;return;}
+ g.insertAdjacentHTML('beforeend',slice.map(card).join(''));
+ page++;$('#more').hidden=page*PAGE>=shown.length;
+ resolveWho();
+}
+async function resolveWho(){
+ if(db&&db.github){document.querySelectorAll('[data-who]').forEach(e=>{e.textContent=e.dataset.who===ghLogin?'you':e.dataset.who;});return;}
+ if(!userNs)return;
+ const els=[...document.querySelectorAll('[data-who]')].filter(e=>e.dataset.who);
+ const ids=[...new Set(els.map(e=>e.dataset.who))]; if(!ids.length)return;
+ const ps=await userNs.profiles(ids);
+ els.forEach(e=>{const p=ps[e.dataset.who];e.textContent=p?(p.isMe?'you':(p.name||'Someone')):'';});
+}
+function updStats(){
+ let k=0,c=0,w=0;for(const id in marks){const s=marks[id].s;if(s==='keep')k++;else if(s==='cut')c++;else if(s==='rw')w++;}
+ $('#sKeep').textContent=k;$('#sCut').textContent=c;$('#sRw').textContent=w;
+}
+// ---- GitHub store (static copy): marks.json committed through the Contents API with the viewer's own token
+const GH={owner:'charleshross40',repo:'honors-master-list',path:'marks.json',branch:'main'};
+let ghTok='',ghLogin='',ghSha=null,ghBusy=Promise.resolve();
+try{ghTok=localStorage.getItem('hml.ghtok')||'';}catch(e){}
+const ghApi=(p,o={})=>fetch('https://api.github.com'+p,{...o,headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+ghTok,'X-GitHub-Api-Version':'2022-11-28',...(o.headers||{})}});
+const b64e=s=>btoa(unescape(encodeURIComponent(s)));const b64d=s=>decodeURIComponent(escape(atob(s.replace(/\n/g,''))));
+async function ghLoad(){
+ const r=await ghApi(`/repos/${GH.owner}/${GH.repo}/contents/${GH.path}?ref=${GH.branch}`,{cache:'no-store'});
+ if(r.status===404){ghSha=null;return {};}
+ if(!r.ok)throw new Error('load '+r.status);
+ const j=await r.json();ghSha=j.sha;try{return JSON.parse(b64d(j.content))||{};}catch(e){return {};}
+}
+async function ghConnect(){
+ const u=await ghApi('/user');if(!u.ok)throw new Error('token '+u.status);
+ ghLogin=(await u.json()).login;
+ marks=await ghLoad();updStats();apply();
+ db={github:true};canWrite=true;
+ $('#ghBtn').textContent='GitHub connected';$('#ghWho').textContent='marking as '+ghLogin;$('#ghForget').hidden=false;
+}
+async function ghWrite(id,body){
+ ghBusy=ghBusy.then(async()=>{
+  for(let attempt=0;attempt<2;attempt++){
+   const cur=await ghLoad();cur[id]=body;
+   const title=(rows.find(r=>String(r.id)===String(id))||{}).n||id;
+   const msg=`${body.s||'unmark'}: ${title}`+(body.sum?' (summary)':body.note?' (note)':'');
+   const r=await ghApi(`/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(JSON.stringify(cur,null,1)),branch:GH.branch,...(ghSha?{sha:ghSha}:{})})});
+   if(r.ok){const j=await r.json();ghSha=j.content.sha;marks=cur;updStats();return;}
+   if(r.status!==409&&r.status!==422){showBanner('GitHub refused the save ('+r.status+'). Check the token has Contents: write on this repo.');return;}
+  }
+  showBanner('Save collided with another edit. Reload and mark it again.');
+ }).catch(e=>showBanner('GitHub save failed: '+(e&&e.message||e)));
+ return ghBusy;
+}
+function ghInit(){
+ if(inViewer)return;
+ $('#gh').hidden=false;
+ $('#ghBtn').addEventListener('click',()=>{$('#ghForm').hidden=!$('#ghForm').hidden;if(!$('#ghForm').hidden)$('#ghTok').focus();});
+ $('#ghCancel').addEventListener('click',()=>{$('#ghForm').hidden=true;});
+ $('#ghForget').addEventListener('click',()=>{try{localStorage.removeItem('hml.ghtok');}catch(e){}ghTok='';ghLogin='';db=null;$('#ghBtn').textContent='Connect GitHub to mark';$('#ghWho').textContent='';$('#ghForget').hidden=true;apply();});
+ $('#ghForm').addEventListener('submit',async e=>{e.preventDefault();const t=$('#ghTok').value.trim();if(!t)return;ghTok=t;
+  try{await ghConnect();try{localStorage.setItem('hml.ghtok',t);}catch(x){}$('#ghForm').hidden=true;$('#ghTok').value='';$('#banner').hidden=true;}
+  catch(err){ghTok='';showBanner('That token did not work ('+(err&&err.message||err)+'). Make a fine-grained token for this repo with Contents: read and write.');}
+ });
+ if(ghTok){ghConnect().catch(()=>{showBanner('Saved GitHub token no longer works. Connect again.');ghTok='';});}
+}
+// ---- events
+$('#grid').addEventListener('click',e=>{
+ const b=e.target.closest('.blurb');if(b){b.classList.toggle('open');return;}
+ const btn=e.target.closest('button[data-m]');if(!btn)return;
+ const art=btn.closest('.card'),id=art.dataset.id;const cur=marks[id]||{};
+ const s=cur.s===btn.dataset.m?'':btn.dataset.m;
+ writeMark(id,{...cur,s});
+ art.dataset.m=s;art.querySelectorAll('button[data-m]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.m===s)));
+ if(s==='rw'&&!art.querySelector('textarea[data-f="sum"]')){art.querySelector('.marks').insertAdjacentHTML('beforeend','<textarea class="note sum" data-f="sum" placeholder="Our summary, in our words"></textarea>');}
+});
+const timers={};
+$('#grid').addEventListener('input',e=>{
+ const ta=e.target.closest('textarea[data-f]');if(!ta)return;
+ const id=ta.closest('.card').dataset.id;const f=ta.dataset.f;
+ clearTimeout(timers[id+f]);timers[id+f]=setTimeout(()=>{const cur=marks[id]||{};writeMark(id,{...cur,[f]:ta.value});},700);
+});
+async function writeMark(id,m){
+ if(!db)return;
+ const body={s:m.s||'',note:m.note||'',sum:m.sum||'',by:me||'',at:new Date().toISOString()};
+ marks[id]=body;updStats();
+ if(db.github){body.by=ghLogin;marks[id]=body;return ghWrite(id,body);}
+ try{await db.doc('marks/'+id).set(body);}catch(err){if(err&&err.code==='invalid_argument'){canWrite=false;showBanner('This copy is read-only for you. Ask the owner to share it with you as an editor.');}}
+}
+function showBanner(t){const b=$('#banner');b.textContent=t;b.hidden=false;}
+document.querySelectorAll('.bar button.ch[data-k]').forEach(b=>b.addEventListener('click',()=>{state[b.dataset.k]=b.dataset.v;save();syncUI();apply();}));
+$('#q').addEventListener('input',e=>{state.q=e.target.value;save();apply();});
+$('#yr').addEventListener('change',e=>{state.yr=e.target.value;save();apply();});
+$('#minsc').addEventListener('change',e=>{state.minsc=+e.target.value;save();apply();});
+$('#fmt').addEventListener('change',e=>{state.fmt=e.target.value;save();apply();});
+$('#where').addEventListener('change',e=>{state.where=e.target.value;save();apply();});
+$('#sort').addEventListener('change',e=>{state.sort=e.target.value;save();apply();});
+$('#more').addEventListener('click',()=>render(false));
+// ---- data
+fetch('db.json').then(r=>r.json()).then(data=>{
+ rows=data;
+ rows.forEach(r=>{r._k=[r.n,r.r,r.j,...r.g,...r.q.map(t=>t[0]),...r.tg,...r.stu,...r.by].join(' ').toLowerCase();r._qr=r.q.reduce((a,t)=>Math.max(a,t[1]),0);});
+ $('#sTotal').textContent=rows.length.toLocaleString();
+ const gc={};rows.forEach(r=>r.g.forEach(g=>gc[g]=(gc[g]||0)+1));
+ const gs=Object.keys(gc).sort((a,b)=>gc[b]-gc[a]);
+ $('#genres').innerHTML='<button class="ch" data-k="genre" data-v="">Any</button>'+gs.map(g=>`<button class="ch" data-k="genre" data-v="${esc(g)}">${esc(g)}</button>`).join('');
+ $('#genres').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.genre=b.dataset.v;save();syncUI();apply();}));
+ syncUI();apply();
+ if(!inViewer&&!ghTok){fetch('marks.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(m=>{if(!ghLogin){marks=m||{};updStats();apply();}}).catch(()=>{});}
+ ghInit();
+}).catch(()=>{$('#grid').innerHTML='<div class="empty">The list file did not load. Reload the page.</div>';});
+// ---- shared marks (claude.ai viewer only)
+(async()=>{
+ if(!inViewer)return;
+ const [d,u]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
+ if(!d){showBanner('Marks are not available in this view. Open the page from claude.ai, signed in.');return;}
+ db=d;userNs=u;
+ if(u){me=await u.id();const cw=await u.can('data.write');if(cw===false){canWrite=false;showBanner('You can see the marks but not change them. Ask the owner to share this with you as an editor.');}}
+ db.collection('marks').onSnapshot(snap=>{
+  const next={};snap.docs.forEach(doc=>{if(doc.exists)next[doc.id]=doc.data();});
+  marks=next;updStats();
+  const openTA=document.activeElement&&document.activeElement.tagName==='TEXTAREA';
+  if(!openTA)apply();
+ },err=>{showBanner('Marks stopped syncing ('+(err&&err.code||'unavailable')+'). Reload to reconnect.');});
+})();
+})();
+</script>
+
+</body></html>
