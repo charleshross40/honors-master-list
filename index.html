@@ -183,8 +183,8 @@ async function ghLoad(){
 async function ghConnect(){
  const u=await ghApi('/user');if(!u.ok)throw new Error('token '+u.status);
  ghLogin=(await u.json()).login;
- marks=await ghLoad();updStats();apply();
  db={github:true};canWrite=true;
+ marks=await ghLoad();updStats();apply();
  $('#ghBtn').textContent='GitHub connected';$('#ghWho').textContent='marking as '+ghLogin;$('#ghForget').hidden=false;
 }
 async function ghWrite(id,body){
