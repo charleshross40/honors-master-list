@@ -260,7 +260,7 @@ $('#where').addEventListener('change',e=>{state.where=e.target.value;save();appl
 $('#sort').addEventListener('change',e=>{state.sort=e.target.value;save();apply();});
 $('#more').addEventListener('click',()=>render(false));
 // ---- data
-fetch('db.json').then(r=>r.json()).then(data=>{
+fetch('db.json?v=3',{cache:'no-store'}).then(r=>r.json()).then(data=>{
  rows=data;
  rows.forEach(r=>{r._k=[r.n,r.r,r.j||'',...r.g,...r.q.map(t=>t[0]),...r.tg,...r.stu,...r.by].join(' ').toLowerCase();r._qr=r.q.reduce((a,t)=>Math.max(a,t[1]),0);});
  $('#sTotal').textContent=rows.length.toLocaleString();
