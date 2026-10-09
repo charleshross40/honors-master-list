@@ -61,6 +61,7 @@ textarea.note{font:inherit;font-size:13px;width:100%;min-height:38px;border:1px 
 textarea.sum{min-height:60px}
 .more{display:block;margin:16px auto 0;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:10px;padding:10px 18px;cursor:pointer}
 .note-ro{font-size:13px;background:var(--bg);border-radius:8px;padding:6px 8px;white-space:pre-wrap}
+.why{grid-column:1/-1;display:flex;flex-direction:column;gap:4px}.why p{margin:0;font-size:14px;line-height:1.35}.why b{font-family:var(--display);font-size:15px;letter-spacing:.02em}.why textarea{font:inherit;font-size:14px;width:100%;min-height:36px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--bg);color:var(--fg);resize:vertical}
 .banner{font-size:13px;color:var(--muted);margin:6px 0 0}
 .empty{grid-column:1/-1;color:var(--muted);padding:30px 0;text-align:center}
 .gh{display:flex;flex-direction:column;gap:6px;margin:6px 0 2px}.gh>button{align-self:flex-start}.gh .who{font-size:12.5px;color:var(--muted)}#ghForm{display:flex;flex-direction:column;gap:6px}
@@ -139,13 +140,20 @@ function card(r){
  const gchips=r.g.map(g=>`<span class="chip">${esc(g)}</span>`).join('')+r.tg.slice(0,4).map(g=>`<span class="chip" style="opacity:.75">${esc(g)}</span>`).join('');
  const img=(!inViewer&&r.img)?`<img src="${esc(r.img)}" alt="" loading="lazy">`:'';
  const links=r.s.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener"><b>${esc(x[0])}</b></a>`).join('')+`<a href="${esc(r.u)}" target="_blank" rel="noopener" style="color:var(--muted)">AniList</a>`;
+ const whyMap=Object.assign({},m.why||{}); if(m.note&&!Object.keys(whyMap).length) whyMap[m.by||'']=m.note;
+ const meKey=(db&&db.github)?ghLogin:(me||'');
+ let why='';
+ const others=Object.keys(whyMap).filter(k=>k!==meKey&&whyMap[k]);
+ if(others.length||(db&&canWrite)){
+  why='<div class="why">'+others.map(k=>`<p><b data-who="${esc(k)}">${esc(k)}</b>: ${esc(whyMap[k])}</p>`).join('')+((db&&canWrite)?`<p><b>${esc(meKey||'you')}</b>: <textarea data-f="why" placeholder="Why it matters, in one sentence">${esc(whyMap[meKey]||'')}</textarea></p>`:'')+'</div>';
+ }
  let markrow='';
  if(db&&canWrite){
-  markrow=`<div class="marks"><div class="mrow"><button class="ch k" data-m="keep" aria-pressed="${m.s==='keep'}">Keep</button><button class="ch w" data-m="rw" aria-pressed="${m.s==='rw'}">Rewrite</button><button class="ch x" data-m="cut" aria-pressed="${m.s==='cut'}">Cut</button><span class="who" data-who="${esc(m.by||'')}">${m.by?'…':''}</span></div><textarea class="note" data-f="note" placeholder="Why it's in or out">${esc(m.note||'')}</textarea>${m.s==='rw'||m.sum?`<textarea class="note sum" data-f="sum" placeholder="Our summary, in our words">${esc(m.sum||'')}</textarea>`:''}</div>`;
+  markrow=`<div class="marks"><div class="mrow"><button class="ch k" data-m="keep" aria-pressed="${m.s==='keep'}">Keep</button><button class="ch w" data-m="rw" aria-pressed="${m.s==='rw'}">Rewrite</button><button class="ch x" data-m="cut" aria-pressed="${m.s==='cut'}">Cut</button><span class="who" data-who="${esc(m.by||'')}">${m.by?'…':''}</span></div>${m.s==='rw'||m.sum?`<textarea class="note sum" data-f="sum" placeholder="Our summary, in our words">${esc(m.sum||'')}</textarea>`:''}</div>`;
  }else if(m.s||m.note||m.sum){
-  markrow=`<div class="marks"><div class="mrow"><span class="chip ${m.s==='keep'?'k':m.s==='cut'?'x':'w'}" style="background:var(--${m.s==='rw'?'rw':m.s}-bg);color:var(--${m.s==='rw'?'rw':m.s})">${m.s==='keep'?'Keep':m.s==='cut'?'Cut':'Rewrite'}</span><span class="who" data-who="${esc(m.by||'')}"></span></div>${m.note?`<div class="note-ro">${esc(m.note)}</div>`:''}${m.sum?`<div class="note-ro">${esc(m.sum)}</div>`:''}</div>`;
+  markrow=`<div class="marks"><div class="mrow"><span class="chip ${m.s==='keep'?'k':m.s==='cut'?'x':'w'}" style="background:var(--${m.s==='rw'?'rw':m.s}-bg);color:var(--${m.s==='rw'?'rw':m.s})">${m.s==='keep'?'Keep':m.s==='cut'?'Cut':'Rewrite'}</span><span class="who" data-who="${esc(m.by||'')}"></span></div>${m.sum?`<div class="note-ro">${esc(m.sum)}</div>`:''}</div>`;
  }
- return `<article class="card" data-id="${r.id}" data-m="${esc(m.s||'')}"><div class="sw" style="background:${esc(r.c||'#777')}">${img}<b>${r.t==='A'?'ANIME':'MANGA'}</b></div><div class="head"><h2 class="t">${esc(r.n)}${t?`<small>${esc(t)}</small>`:''}</h2><div class="facts">${facts}</div><div class="facts"><span class="score"><i>★</i><b>${r.sc!=null?(r.sc/10).toFixed(1):'–'}</b></span> · ${fmtN(r.pop)} users${r.fav?' · '+fmtN(r.fav)+' ♥':''}</div></div><div class="chips">${qchips}${gchips}</div>${r.d?`<div class="blurb">${esc(r.d)}</div>`:''}<div class="links">${links}</div>${markrow}</article>`;
+ return `<article class="card" data-id="${r.id}" data-m="${esc(m.s||'')}"><div class="sw" style="background:${esc(r.c||'#777')}">${img}<b>${r.t==='A'?'ANIME':'MANGA'}</b></div><div class="head"><h2 class="t">${esc(r.n)}${t?`<small>${esc(t)}</small>`:''}</h2><div class="facts">${facts}</div><div class="facts"><span class="score"><i>★</i><b>${r.sc!=null?(r.sc/10).toFixed(1):'–'}</b></span> · ${fmtN(r.pop)} users${r.fav?' · '+fmtN(r.fav)+' ♥':''}</div></div>${why}<div class="chips">${qchips}${gchips}</div>${r.d?`<div class="blurb">${esc(r.d)}</div>`:''}<div class="links">${links}</div>${markrow}</article>`;
 }
 function render(reset){
  const g=$('#grid');
@@ -227,11 +235,13 @@ const timers={};
 $('#grid').addEventListener('input',e=>{
  const ta=e.target.closest('textarea[data-f]');if(!ta)return;
  const id=ta.closest('.card').dataset.id;const f=ta.dataset.f;
- clearTimeout(timers[id+f]);timers[id+f]=setTimeout(()=>{const cur=marks[id]||{};writeMark(id,{...cur,[f]:ta.value});},700);
+ clearTimeout(timers[id+f]);timers[id+f]=setTimeout(()=>{const cur=marks[id]||{};
+  if(f==='why'){const key=(db&&db.github)?ghLogin:(me||'');const why=Object.assign({},cur.why||{});why[key]=ta.value;writeMark(id,{...cur,why});}
+  else writeMark(id,{...cur,[f]:ta.value});},700);
 });
 async function writeMark(id,m){
  if(!db)return;
- const body={s:m.s||'',note:m.note||'',sum:m.sum||'',by:me||'',at:new Date().toISOString()};
+ const body={s:m.s||'',note:m.note||'',sum:m.sum||'',why:m.why||{},by:me||'',at:new Date().toISOString()};
  marks[id]=body;updStats();
  if(db.github){body.by=ghLogin;marks[id]=body;return ghWrite(id,body);}
  try{await db.doc('marks/'+id).set(body);}catch(err){if(err&&err.code==='invalid_argument'){canWrite=false;showBanner('This copy is read-only for you. Ask the owner to share it with you as an editor.');}}
