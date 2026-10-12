@@ -159,6 +159,9 @@ function apply(){
  page=0;render(true);
  $('#sShown').textContent=shown.length.toLocaleString();$('#fshown').textContent=shown.length.toLocaleString();activeChips();
 }
+const CURATORS=[['charleshross40','Chaz'],['frostcatt','Frost']];
+const CUR_NAME=Object.fromEntries(CURATORS);
+const curName=k=>CUR_NAME[(k||'').toLowerCase()]||k;
 function card(r){
  const m=marks[r.id]||{};
  const t=r.n===r.r||!r.r?'':r.r;
@@ -170,11 +173,14 @@ function card(r){
  const links=r.s.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener"><b>${esc(x[0])}</b></a>`).join('')+`<a href="${esc(r.u)}" target="_blank" rel="noopener" style="color:var(--muted)">AniList</a>`;
  const whyMap=Object.assign({},m.why||{}); if(m.note&&!Object.keys(whyMap).length) whyMap[m.by||'']=m.note;
  const meKey=(db&&db.github)?ghLogin:(me||'');
- let why='';
- const others=Object.keys(whyMap).filter(k=>k!==meKey&&whyMap[k]);
- if(others.length||(db&&canWrite)){
-  why='<div class="why">'+others.map(k=>`<p><b data-who="${esc(k)}">${esc(k)}</b>: ${esc(whyMap[k])}</p>`).join('')+((db&&canWrite)?`<p><b>${esc(meKey||'you')}</b>: <textarea data-f="why" placeholder="Why it matters, in one sentence">${esc(whyMap[meKey]||'')}</textarea></p>`:'')+'</div>';
- }
+ const editable=!!(db&&canWrite);
+ const keys=[...CURATORS.map(c=>c[0]),...Object.keys(whyMap).filter(k=>whyMap[k]&&!CUR_NAME[k.toLowerCase()])];
+ if(meKey&&!keys.some(k=>k.toLowerCase()===meKey.toLowerCase()))keys.push(meKey);
+ const val=k=>{const hit=Object.keys(whyMap).find(x=>x.toLowerCase()===k.toLowerCase());return hit?whyMap[hit]:'';};
+ const rowsW=keys.map(k=>{const isMe=editable&&meKey&&k.toLowerCase()===meKey.toLowerCase();const v=val(k);
+  if(isMe)return `<p><b>${esc(curName(k))}:</b> <textarea data-f="why" placeholder="${esc(curName(k))}'s take">${esc(v)}</textarea></p>`;
+  return v?`<p><b>${esc(curName(k))}:</b> ${esc(v)}</p>`:'';}).join('');
+ let why=rowsW?'<div class="why">'+rowsW+'</div>':'';
  let markrow='';
  if(db&&canWrite){
   markrow=`<div class="marks"><div class="mrow"><button class="ch k" data-m="keep" aria-pressed="${m.s==='keep'}">Keep</button><button class="ch w" data-m="rw" aria-pressed="${m.s==='rw'}">Rewrite</button><button class="ch x" data-m="cut" aria-pressed="${m.s==='cut'}">Cut</button><span class="who" data-who="${esc(m.by||'')}">${m.by?'…':''}</span></div>${m.s==='rw'||m.sum?`<textarea class="note sum" data-f="sum" placeholder="Our summary, in our words">${esc(m.sum||'')}</textarea>`:''}</div>`;
@@ -195,7 +201,7 @@ function render(reset){
  resolveWho();
 }
 async function resolveWho(){
- if(db&&db.github){document.querySelectorAll('[data-who]').forEach(e=>{e.textContent=e.dataset.who===ghLogin?'you':e.dataset.who;});return;}
+ if(!inViewer||(db&&db.github)){document.querySelectorAll('[data-who]').forEach(e=>{e.textContent=curName(e.dataset.who);});return;}
  if(!userNs)return;
  const els=[...document.querySelectorAll('[data-who]')].filter(e=>e.dataset.who);
  const ids=[...new Set(els.map(e=>e.dataset.who))]; if(!ids.length)return;
