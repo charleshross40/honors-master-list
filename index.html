@@ -69,6 +69,7 @@ input.num{width:64px;font-variant-numeric:tabular-nums}
 .chip{font-size:11.5px;background:var(--chip);border-radius:999px;padding:2px 8px;white-space:nowrap}
 .chip.q{background:var(--queer-bg);color:var(--queer);font-weight:700}
 .chip.q.lo{opacity:.7;font-weight:400}
+.rn{grid-column:1/-1;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13.5px}.rn summary{cursor:pointer;font-family:var(--display);font-size:15px;letter-spacing:.02em}.rn p{margin:6px 0;line-height:1.4}.rn b{font-family:var(--display);font-size:14px;letter-spacing:.02em;margin-right:4px}.rn .rs{font-size:12.5px}.rn a{color:inherit}
 .blurb{grid-column:1/-1;font-size:13.5px;color:var(--fg);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line;cursor:pointer}
 .blurb.open{display:block;-webkit-line-clamp:unset}
 .links{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px}
@@ -123,7 +124,7 @@ textarea.sum{min-height:60px}
 const $=s=>document.querySelector(s);
 const state={type:'',queer:'',genre:'',mark:'',list:'',q:'',yr:'',minsc:0,fmt:'',where:'',sort:'sc'};
 try{const s=JSON.parse(localStorage.getItem('hml.filters.v2')||'{}');Object.assign(state,s);}catch(e){}
-let rows=[],shown=[],page=0,PAGE=60,marks={},db=null,me=null,userNs=null,canWrite=true,inViewer=!!(window.claude&&window.claude.use);
+let rows=[],shown=[],page=0,PAGE=60,marks={},notes={},db=null,me=null,userNs=null,canWrite=true,inViewer=!!(window.claude&&window.claude.use);
 const QO={'LGBTQ+ Themes':1,"Boys' Love":2,'Yuri':3,'Transgender':4,'Gender Bending':5,'Crossdressing':6,'Bisexual':7,'Asexual':8};
 const FMT={TV:'TV',TV_SHORT:'TV short',MOVIE:'Movie',OVA:'OVA',ONA:'ONA',SPECIAL:'Special',MANGA:'Manga',ONE_SHOT:'One-shot',NOVEL:'Light novel',MUSIC:'Music'};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -180,7 +181,9 @@ function card(r){
  }else if(m.s||m.note||m.sum){
   markrow=`<div class="marks"><div class="mrow"><span class="chip ${m.s==='keep'?'k':m.s==='cut'?'x':'w'}" style="background:var(--${m.s==='rw'?'rw':m.s}-bg);color:var(--${m.s==='rw'?'rw':m.s})">${m.s==='keep'?'Keep':m.s==='cut'?'Cut':'Rewrite'}</span><span class="who" data-who="${esc(m.by||'')}"></span></div>${m.sum?`<div class="note-ro">${esc(m.sum)}</div>`:''}</div>`;
  }
- return `<article class="card" data-id="${r.id}" data-m="${esc(m.s||'')}"><div class="sw" style="background:${esc(r.c||'#777')}">${img}<b>${r.t==='A'?'ANIME':'MANGA'}</b></div><div class="head"><h2 class="t">${esc(r.n)}${t?`<small>${esc(t)}</small>`:''}</h2><div class="facts">${facts}</div><div class="facts"><span class="score"><i>★</i><b>${r.sc!=null?(r.sc/10).toFixed(1):'–'}</b></span> · ${fmtN(r.pop)} users${r.fav?' · '+fmtN(r.fav)+' ♥':''}</div></div>${why}<div class="chips">${lchips}${qchips}${gchips}</div>${r.d?`<div class="blurb">${esc(r.d)}</div>`:''}<div class="links">${links}</div>${markrow}</article>`;
+ const N=notes[r.id];
+ const rn=N?`<details class="rn"><summary>Research notes</summary>${N.w?`<p><b>The world</b> ${esc(N.w)}</p>`:''}${N.q?`<p class="rq"><b>LGBTQ+</b> ${esc(N.q)}</p>`:''}${N.g?`<p><b>Impact</b> ${esc(N.g)}</p>`:''}${N.src&&N.src.length?`<p class="rs">${N.src.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/,'').split('/')[0])}</a>`).join(' · ')}</p>`:''}</details>`:'';
+ return `<article class="card" data-id="${r.id}" data-m="${esc(m.s||'')}"><div class="sw" style="background:${esc(r.c||'#777')}">${img}<b>${r.t==='A'?'ANIME':'MANGA'}</b></div><div class="head"><h2 class="t">${esc(r.n)}${t?`<small>${esc(t)}</small>`:''}</h2><div class="facts">${facts}</div><div class="facts"><span class="score"><i>★</i><b>${r.sc!=null?(r.sc/10).toFixed(1):'–'}</b></span> · ${fmtN(r.pop)} users${r.fav?' · '+fmtN(r.fav)+' ♥':''}</div></div>${why}<div class="chips">${lchips}${qchips}${gchips}</div>${r.d?`<div class="blurb">${esc(r.d)}</div>`:''}${rn}<div class="links">${links}</div>${markrow}</article>`;
 }
 function render(reset){
  const g=$('#grid');
@@ -310,6 +313,7 @@ fetch('db.json?v=3',{cache:'no-store'}).then(r=>r.json()).then(data=>{
  rows=data;
  rows.forEach(r=>{r._k=[r.n,r.r,r.j||'',...r.g,...r.q.map(t=>t[0]),...r.tg,...r.stu,...r.by].join(' ').toLowerCase();r._qr=r.q.reduce((a,t)=>Math.max(a,t[1]),0);});
  $('#sTotal').textContent=rows.length.toLocaleString();
+ fetch('notes.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(n=>{notes=n||{};apply();}).catch(()=>{});
  const gc={};rows.forEach(r=>r.g.forEach(g=>gc[g]=(gc[g]||0)+1));
  const gs=Object.keys(gc).sort((a,b)=>gc[b]-gc[a]);
  $('#genres').innerHTML='<button class="ch" data-k="genre" data-v="">Any</button>'+gs.map(g=>`<button class="ch" data-k="genre" data-v="${esc(g)}">${esc(g)}</button>`).join('');
